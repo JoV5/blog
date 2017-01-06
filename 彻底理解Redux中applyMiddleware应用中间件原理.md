@@ -251,6 +251,10 @@ function compose(...funcs) {
 
 (Function): 从右到左把接收到的函数合成后的最终函数。
 
+举个例子
+```js
+compose(f1, f2, f3)(arg) = f1(f2(f3(arg)))
+```
 
 ```js
 // 上文我们得到
@@ -311,6 +315,55 @@ Middleware 可以让你包装 store 的 dispatch 方法来达到你想要的目�
 return {
 	...store,
 	dispatch // 用应用中间件后的dispatch替代原始dispatch
+}
+```
+
+【重点D】需要强调的是，中间件内部实现必需保证next(action)的执行，否则中间件将不能正确的链接，
+在缺失next(action)的中间件之后将会中断，导致原始的store.dispatch也不能执行
+
+比如说logger缺失next(action)
+```js
+const logger = store => next => action => {
+	console.log('dispatching', action);
+	//let result = next(action);
+	console.log('next state', store.getState());
+	//return result;
+};
+
+const crashReporter = store => next => action => {
+	try {
+		return next(action)
+	} catch (err) {
+		console.error('Caught an exception!', err)
+		Raven.captureException(err, {
+			extra: {
+				action,
+				state: store.getState()
+			}
+		})
+		throw err
+	}
+}
+```
+执行
+
+applyMiddleware(logger, crashReporter)
+
+||
+
+\\/
+
+compose(...chain)(store.dispatch)
+
+
+dispatch_2会是什么？
+
+结果应该是：
+```js
+dispatch_2 = action => {
+	console.log('dispatching', action);
+	console.log('next state', middlewareAPI.getState());
+	return result;
 }
 ```
 
