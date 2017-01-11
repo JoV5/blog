@@ -183,8 +183,8 @@ var middlewareAPI = {
 	dispatch: (action) => dispatch(action)
 }
 // middlewares = [logger, crashReporter]
-// 【重点A】注意：中间件第一次调用时的参数store就是middlewareAPI
-chain = middlewares_.map(middleware => middleware(middlewareAPI))
+// 【重点A】注意：中间件第一次调用时的参数store就是middlewareAPI，即提供给中间件的接口
+chain = middlewares.map(middleware => middleware(middlewareAPI))
 // 执行后 chain = [logger(middlewareAPI), crashReporter(middlewareAPI)]
 // 执行chain内部后
 chain = [
@@ -279,7 +279,7 @@ dispatch_1 = (...args) => chain.slice(0, -1).reduceRight((composed, f) => f(comp
 // 执行dispatch_2后
 dispatch_2 = action => {
 	console.log('dispatching', action);
-	let result = (action => {
+	let result = (action => { // 此行
 		try {
 			return store.dispatch(action)
 		} catch (err) {
@@ -292,7 +292,7 @@ dispatch_2 = action => {
 			})
 			throw err
 		}
-	})(action);
+	})(action); // 到此行将next替换为chain[1](store.dispatch)
 	console.log('next state', middlewareAPI.getState());
 	return result;
 }
@@ -314,12 +314,11 @@ Middleware 可以让你包装 store 的 dispatch 方法来达到你想要的目�
 ```js
 return {
 	...store,
-	dispatch // 用应用中间件后的dispatch替代原始dispatch
+	dispatch // 返回新的dispatch
 }
 ```
 
-【重点D】需要强调的是，中间件内部实现必需保证next(action)的执行，否则中间件将不能正确的链接，
-在缺失next(action)的中间件之后将会中断，导致原始的store.dispatch也不能执行
+【重点D】需要强调的是，要触发action，中间件内部实现必需保证next(action)的执行，否则中间件将不能正确的链接，在缺失next(action)的中间件之后将会中断，导致原始的store.dispatch也不能执行，但是在有意截断action时比如redux-thunk在action是function时故意截断
 
 比如说logger缺失next(action)
 ```js
@@ -353,7 +352,7 @@ applyMiddleware(logger, crashReporter)
 
 \\/
 
-compose(...chain)(store.dispatch)
+dispatch_2 = compose(...chain)(store.dispatch);
 
 
 dispatch_2会是什么？
@@ -362,8 +361,9 @@ dispatch_2会是什么？
 ```js
 dispatch_2 = action => {
 	console.log('dispatching', action);
+	//let result = next(action);
 	console.log('next state', middlewareAPI.getState());
-	return result;
+	//return result;
 }
 ```
 
@@ -373,6 +373,5 @@ dispatch_2 = action => {
 [applyMiddleware](http://cn.redux.js.org/docs/api/applyMiddleware.html)
 
 [Middleware](http://cn.redux.js.org/docs/advanced/Middleware.html)
-
 
 
