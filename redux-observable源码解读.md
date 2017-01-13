@@ -1,12 +1,12 @@
 > 前置阅读:
 
-> 了解RxJS，[RxJS Overview](http://reactivex.io/rxjs/manual/overview.html)
+> 了解RxJS，[RxJS Overview](http://reactivex.io/rxjs/manual/overview.html)，需要理解其中的Observable、Observer、Subject概念
 
 > 了解redux中间件，[彻底理解Redux中applyMiddleware中间件原理](https://github.com/JoV5/blog/issues/1)
 
 > 了解redux-observable中的Epic是什么，[Epics](https://redux-observable.js.org/docs/basics/Epics.html)
 
-假设有这样一个epic，
+假设有这样一个epic
 ```js
 function fetchReposByUser(action$) {
   return action$.ofType(ActionTypes.REQUESTED_USER_REPOS)
@@ -167,10 +167,10 @@ if (typeof _epic !== 'function') {
   throw new TypeError('You must provide a root Epic to createEpicMiddleware');
 }
 
-const input$ = new Subject();
+const input$ = new Subject(); // 定义input$为Subject
 
 // 默认的adapter则action$的结果为：action$ = new ActionsObservable(input$);
-// 初始化action$为ActionsObservable，设置input$为action$的source
+// 初始化action$为ActionsObservable，设置action$的source为input$
 const action$ = adapter.input(
   new ActionsObservable(input$)
 );
@@ -184,14 +184,15 @@ const epicMiddleware = _store => {
   return next => {
     epic$
       ::map(epic => {
-      const output$ = epic(action$, store); // 执行rootEpic，执行过程前往【坐标A】，返回一个合并后的ArrayObservable
+      const output$ = epic(action$, store); // 执行rootEpic，执行过程前往【坐标A】查看，返回一个合并后的ArrayObservable
       if (!output$) {
         throw new TypeError(`Your root Epic "${epic.name || '<anonymous>'}" does not return a stream. Double check you\'re not missing a return statement!`);
       }
       return output$;
     })
-      ::switchMap(output$ => adapter.output(output$)) // 这里新起一个Observable，如果这里用mergeMap会发生什么？【问题A】
+      ::switchMap(output$ => adapter.output(output$)) // 在这里新起一个Observable，如果这里用mergeMap会发生什么？【问题A】
       .subscribe(store.dispatch); // 执行这个新起的Observable，因为设置了初始action$的起点source为input$，最终会在input$的observers中注册以监听input$，中间过程不在这里展开
+      // 最终调用store.dispatch，所以这里应该接受一个action
       // 符合文档中对Epic的描述，It is a function which takes a stream of actions and returns a stream of actions. Actions in, actions out.
       // function (action$: Observable<Action>, store: Store): Observable<Action>;
 
@@ -200,7 +201,7 @@ const epicMiddleware = _store => {
 
     return action => {
       const result = next(action); // 中间件传递，这里可以看出reducers是先于epic接收到action的
-      input$.next(action); // 执行，向注册的observers广播action
+      input$.next(action); // 执行，向input$中注册的observers广播action
       // 如果我们的epic是这样的 const actionEpic = (action$) => action$; // creates infinite loop
       // 可以看出它将会dispatch自己造成无限循环
       return result;
