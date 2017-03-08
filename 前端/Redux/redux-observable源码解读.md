@@ -1,6 +1,6 @@
 > 前置阅读:
 
-> 了解RxJS，[RxJS Overview](http://reactivex.io/rxjs/manual/overview.html)，需要理解其中的Observable、Observer、Subject概念
+> 理解RxJS，[RxJS Overview](http://reactivex.io/rxjs/manual/overview.html)
 
 > 了解redux中间件，[彻底理解Redux中applyMiddleware中间件原理](https://github.com/JoV5/blog/issues/1)
 
@@ -123,12 +123,14 @@ class ActionsObservable extends Observable {
   }
 
   // 重写构造函数，初始化时需要参数作为source
+  // TODO 为什么设置source
   constructor(actionsSubject) {
     super();
     this.source = actionsSubject;
   }
 
   // 这里重写了lift方法
+  // lift方法用在operator方法内（比如map等），用于创建新的Observable并返回，将自己设为新observable的source，参数operator作为新observable的operator
   lift(operator) {
     const observable = new ActionsObservable(this); // 这里new的是ActionsObservable，保持一致
     // observable.source = this; // 重写的lift方法去掉了去掉这一行，因为在new ActionsObservable(this)时设置了source
@@ -219,3 +221,4 @@ epicMiddleware.replaceEpic = epic => {
   epic$.next(epic); // 上面的【问题A】，如果用mergeMap，它进行的不是替换而是合成
 };
 ```
+
