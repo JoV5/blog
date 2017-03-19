@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./BubbleSort.js"></script>
+</head>
+<body>
+<script>
+  // 随机生成数组
+  function genRandomArr(len, range = 1000) {
+    let arr = [];
+    
+    while (arr.length < len) {
+      arr.push(Math.round(Math.random() * range))
+    }
+    
+    return arr;
+  }
+  
+  // 生成有序数组
+  function genIndexArr(len, range = 1000) {
+    let arr = [];
+
+    while (arr.length < len) {
+      arr.push(arr.length)
+    }
+
+    return arr;
+  }
+  
+  function testBubbleSort(len, random = true) {
+    const type = random ? '随机' : '有序';
+    let testArr = random ? genRandomArr(len) : genIndexArr(len);
+
+    let testArr1 = [...testArr];
+    console.time(`bubbleSort1----${type}${len}长度数组`);
+    bubbleSort1(testArr1);
+    console.timeEnd(`bubbleSort1----${type}${len}长度数组`);
+    console.log(testArr1);
+
+    let testArr2 = [...testArr];
+    console.time(`bubbleSort2----${type}${len}长度数组`);
+    bubbleSort2(testArr2);
+    console.timeEnd(`bubbleSort2----${type}${len}长度数组`);
+    console.log(testArr2);
+
+    let testArr3 = [...testArr];
+    console.time(`bubbleSort3----${type}${len}长度数组`);
+    bubbleSort3(testArr3);
+    console.timeEnd(`bubbleSort3----${type}${len}长度数组`);
+    console.log(testArr3);
+
+    let testArr4 = [...testArr];
+    console.time(`bubbleSort4----${type}${len}长度数组`);
+    bubbleSort4(testArr4);
+    console.timeEnd(`bubbleSort4----${type}${len}长度数组`);
+    console.log(testArr4);
+  }
+</script>
+
+</body>
+</html>
