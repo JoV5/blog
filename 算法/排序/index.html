@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="./BubbleSort.js"></script>
+  <script src="./InsertionSort.js"></script>
+  <script src="./SelectionSort.js"></script>
+  <script src="./QuickSort.js"></script>
 </head>
 <body>
 <script>
@@ -28,10 +31,23 @@
 
     return arr;
   }
-  
-  function testBubbleSort(len, random = true) {
+
+  function testChromeSort(len, range = 1000, random = true) {
     const type = random ? '随机' : '有序';
-    let testArr = random ? genRandomArr(len) : genIndexArr(len);
+    let testArr = random ? genRandomArr(len, range) : genIndexArr(len, range);
+
+    let testArr1 = [...testArr];
+    console.time(`chromeSort----${type}${len}长度数组`);
+    testArr1.sort(function (a, b) {
+      return a - b;
+    });
+    console.timeEnd(`chromeSort----${type}${len}长度数组`);
+    console.log(testArr1);
+  }
+  
+  function testBubbleSort(len, range = 1000, random = true) {
+    const type = random ? '随机' : '有序';
+    let testArr = random ? genRandomArr(len, range) : genIndexArr(len, range);
 
     let testArr1 = [...testArr];
     console.time(`bubbleSort1----${type}${len}长度数组`);
@@ -56,6 +72,51 @@
     bubbleSort4(testArr4);
     console.timeEnd(`bubbleSort4----${type}${len}长度数组`);
     console.log(testArr4);
+  }
+    
+  function testInsertionSort(len, range = 1000, random = true) {
+    const type = random ? '随机' : '有序';
+    let testArr = random ? genRandomArr(len, range) : genIndexArr(len, range);
+
+    let testArr1 = [...testArr];
+    console.time(`insertionSort----${type}${len}长度数组`);
+    insertionSort(testArr1);
+    console.timeEnd(`insertionSort----${type}${len}长度数组`);
+    console.log(testArr1);
+
+    let testArr2 = [...testArr];
+    console.time(`insertionSort2----${type}${len}长度数组`);
+    insertionSort2(testArr2);
+    console.timeEnd(`insertionSort2----${type}${len}长度数组`);
+    console.log(testArr2);
+  }
+
+  function testSelectionSort(len, range = 1000, random = true) {
+    const type = random ? '随机' : '有序';
+    let testArr = random ? genRandomArr(len, range) : genIndexArr(len, range);
+
+    let testArr1 = [...testArr];
+    console.time(`selectionSort----${type}${len}长度数组`);
+    selectionSort(testArr1);
+    console.timeEnd(`selectionSort----${type}${len}长度数组`);
+    console.log(testArr1);
+  }
+
+  function testQuickSort(len, range = 1000, random = true) {
+    const type = random ? '随机' : '有序';
+    let testArr = random ? genRandomArr(len, range) : genIndexArr(len, range);
+
+    let testArr1 = [...testArr];
+    console.time(`quickSort----${type}${len}长度数组`);
+    quickSort(testArr1);
+    console.timeEnd(`quickSort----${type}${len}长度数组`);
+    console.log(testArr1);
+
+    let testArr2 = [...testArr];
+    console.time(`quickSort2----${type}${len}长度数组`);
+    quickSort2(testArr2);
+    console.timeEnd(`quickSort2----${type}${len}长度数组`);
+    console.log(testArr2);
   }
 </script>
 
