@@ -12,24 +12,6 @@ function swap(arr, i, j) {
   arr[j] = tmp;
 }
 
-function median3(arr, left, right) {
-  let center = (left + right) >> 1;
-  
-  if (arr[left] > arr[center]) {
-    swap(arr, left, center);
-  }
-  if (arr[left] > arr[right]) {
-    swap(arr, left, right);
-  }
-  if (arr[center] > arr[right]) {
-    swap(arr, center, right);
-  }
-  
-  swap(arr, center, right - 1);
-  
-  return arr[right - 1];
-}
-
 function quickSort(array) {
   // 交换元素位置
   function swap(array, i, k) {
@@ -60,6 +42,24 @@ function quickSort(array) {
   }
   sort(array, 0, array.length - 1);
   return array;
+}
+
+function median3(arr, left, right) {
+  let center = (left + right) >> 1;
+  
+  if (arr[left] > arr[center]) {
+    swap(arr, left, center);
+  }
+  if (arr[left] > arr[right]) {
+    swap(arr, left, right);
+  }
+  if (arr[center] > arr[right]) {
+    swap(arr, center, right);
+  }
+  
+  swap(arr, center, right - 1);
+  
+  return arr[right - 1];
 }
 
 let  cutoff = 3;
