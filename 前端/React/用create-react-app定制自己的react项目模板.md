@@ -1,6 +1,6 @@
 # 用create-react-app定制自己的react项目模板
 
-> 本文记录了在开发[`react-cnode`](https://github.com/JoV5/react-cnode)时，所使用的项目模板[react-starter](https://github.com/JoV5/react-starter)。[`create-react-app`](https://github.com/facebookincubator/create-react-app)是非常优秀的官方脚手架，已经提供了丰富的功能，该模板是基于[`create-react-app`](https://github.com/facebookincubator/create-react-app)创建的项目eject后，在不影响原有功能的前提下，根据个人的需要进行了一些定制。
+> 本文记录了在开发[`react-cnode`](https://github.com/JoV5/react-cnode)时，所使用的react项目模板[react-starter](https://github.com/JoV5/react-starter)。[`create-react-app`](https://github.com/facebookincubator/create-react-app)是非常优秀的官方脚手架，已经提供了丰富的功能，该模板是基于[`create-react-app`](https://github.com/facebookincubator/create-react-app)创建的项目eject后，在不影响原有功能的前提下，根据个人的需要进行了一些定制。
 
 ## 目录
 - [使用webpack2](#使用webpack2)
@@ -164,7 +164,7 @@ module.exports = {
 [官方react hot loader3的使用指南](https://github.com/gaearon/react-hot-loader/tree/master/docs#migration-to-30)
 
 
-如果你使用[`react router 4`](https://github.com/ReactTraining/react-router)，那么你可以直接使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载：
+你可以使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载：
 
 `npm install lazy-load-react`
 
@@ -181,7 +181,7 @@ const HomePage = lazyme(() => System.import('./HomePage'));
 ## 支持alias配置
 与配置第三方库文件类似，需要在`appconfig.js`中进行配置。
 
-alias的使用方法请参考官方文档[resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias)。resolve下也可以进行官方文档[Resolve](https://webpack.js.org/configuration/resolve)的其他配置项的配置。中文文档[解析(Resolve)](https://doc.webpack-china.org/configuration/resolve/)。示例如下：
+alias的使用方法请参考[官方文档resolve.alias](https://webpack.js.org/configuration/resolve/#resolve-alias)。resolve下也可以进行[官方文档Resolve](https://webpack.js.org/configuration/resolve)中其他配置项的配置。中文文档[解析(Resolve)](https://doc.webpack-china.org/configuration/resolve/)。`appconfig.js`配置示例如下：
 
 ```js
 module.exports = {
