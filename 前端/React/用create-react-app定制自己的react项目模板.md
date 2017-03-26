@@ -182,7 +182,7 @@ const HomePage = lazyme(() => System.import('./HomePage'));
 
 <Route exact path="/" component={HomePage}/>
 ```
-具体使用方法可以参考示例[`react-router App`](https://github.com/JoV5/react-starter/blob/master/src/react-router/containers/App.js)。
+具体使用方法可以参考示例[`react-router App`](https://github.com/JoV5/react-starter/blob/master/src/react-router/containers/App.js)或者[`react-cnode App`](https://github.com/JoV5/react-cnode/blob/master/src/containers/App/index.js)。
 
 
 <a id="支持alias配置"></a>
