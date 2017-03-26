@@ -169,7 +169,7 @@ module.exports = {
 <a id="react组件按需加载"></a>
 ## react组件按需加载
 
-你可以使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载，
+你可以使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载，使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)提供的方法加载文件，同时也支持热更新！
 在本项目模板中已经内置，在其他项目中使用可通过：  
 
 `npm install lazy-load-react`  
