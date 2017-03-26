@@ -88,6 +88,12 @@ Object.assign({
     ]
 }, appConfigEntry)
 ```
+并且在plugins的配置内增加[`CommonsChunkPlugin`](https://webpack.js.org/plugins/commons-chunk-plugin/)插件：
+```js
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['main', 'manifest'].concat(Object.keys(appConfigEntry))
+    }),
+```
 [`webpack.config.dev.js`](https://github.com/JoV5/react-starter/blob/master/config/webpack.config.dev.js#L38-L60)的修改类似，这里我固定了应用文件打包后文件名为`main.js`。
 
 对于想要打包在一个文件中的库文件，比如想把`react`和`react-dom`这两个库文件一起打包进`react.js`文件中，以及其他打包进`vendors.js`中，可以在`appconfig.js`中进行以下配置：
