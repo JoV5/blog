@@ -1,3 +1,5 @@
+> 出自MDN
+
 ### Function.prototype.apply()
 
 **apply** 方法在指定this值和参数（参数以数组或类数组独享的形式存在）的情况下调用某个函数。
@@ -80,7 +82,7 @@ if (!Function.prototype.bind) {
 				return fToBind.apply(this instanceof fNOP
 						? this
 						: oThis || this,
-					aArgs.concat(Array.prototype.slice.call(arguments));
+					aArgs.concat(Array.prototype.slice.call(arguments))
 				)
 			};
 
