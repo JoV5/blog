@@ -7,6 +7,7 @@
 - [多入口](#多入口)
 - [分离第三方库](#分离第三方库)
 - [支持react组件热更新](#支持react组件热更新)
+- [react组件按需加载](#react组件按需加载)
 - [支持alias配置](#支持alias配置)
 
 
@@ -164,10 +165,16 @@ module.exports = {
 [官方react hot loader3的使用指南](https://github.com/gaearon/react-hot-loader/tree/master/docs#migration-to-30)
 
 
-你可以使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载：
 
-`npm install lazy-load-react`
+<a id="react组件按需加载"></a>
+## react组件按需加载
 
+你可以使用[`lazy-load-react`](https://github.com/JoV5/lazy-load-react)来进行组件的按需加载，
+在本项目模板中已经内置，在其他项目中使用可通过：  
+
+`npm install lazy-load-react`  
+
+使用方法：
 ```js
 import lazyme from 'lazy-load-react';
 
@@ -175,7 +182,8 @@ const HomePage = lazyme(() => System.import('./HomePage'));
 
 <Route exact path="/" component={HomePage}/>
 ```
-具体使用方法可以参考示例[`react-router`](https://github.com/JoV5/react-starter/tree/master/src/react-router)。
+具体使用方法可以参考示例[`react-router App`](https://github.com/JoV5/react-starter/blob/master/src/react-router/containers/App.js)。
+
 
 <a id="支持alias配置"></a>
 ## 支持alias配置
