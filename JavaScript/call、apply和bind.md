@@ -1,4 +1,4 @@
-> 出自MDN
+> 摘自MDN
 
 ### Function.prototype.apply()
 
