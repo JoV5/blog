@@ -110,3 +110,7 @@ Promise只能被决议一次（完成或拒绝）。但还有很多异步的情�
 
 ### Promise性能
 Promise稍慢一些，但是作为交换，你得到的是大量内建的可信任性、对Zalgo的避免以及可组合性。
+
+
+## 参考阅读：
+[Promises/A+标准](https://promisesaplus.com/)
