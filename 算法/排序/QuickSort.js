@@ -20,7 +20,7 @@ function quickSort(array) {
     array[k] = temp;
   }
   // 数组分区，左小右大
-  function partition(array, left, right) {
+  function partition(array, left, right) { 
     var storeIndex = left;
     var pivot = array[right]; // 直接选最右边的元素为基准元素
     for (var i = left; i < right; i++) {
